@@ -1,0 +1,11 @@
+package com.example.demo.bean;
+
+public class BeanDefinitions {
+
+	@Bean
+	public RestTemplate restTemplate(){
+
+		return new RestTemplate();
+	}
+	
+}

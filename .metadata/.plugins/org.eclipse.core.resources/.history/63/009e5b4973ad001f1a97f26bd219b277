@@ -1,0 +1,10 @@
+package com.example.demo.service;
+
+import com.example.demo.dto.UserDto;
+
+public interface UserService {
+
+	String register(UserDto user);
+//    boolean validateUser(String username, String password);
+
+}

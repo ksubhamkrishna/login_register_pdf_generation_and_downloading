@@ -1,0 +1,22 @@
+1732257129752	Move 'User.java' to 'model'
+1732261499352	Move file
+1732267339000	Move compilation unit
+1732267401459	Move folder
+1732267420339	Delete element
+1732268018400	Delete element
+1732268075084	Move folder
+1732268990031	Rename compilation unit 'RegisterUser.java'
+1732269009560	Delete element
+1732270358300	Rename resource 'Login.jsp'
+1732270400397	Rename resource 'Register.jsp'
+1732270410738	Rename resource 'Welcome.jsp'
+1732275547275	Delete element
+1732276901620	Move 'config.xml' to 'test'
+1732276904676	Move 'config.xml' to 'view'
+1732276909375	Move 'config.xml' to 'WEB-INF'
+1732278008312	Rename resource 'view'
+1732278382417	Rename resource 'views'
+1732280964125	Move 'index.jsp' to 'webapp'
+1732283102231	Rename resource 'spring-mvc-demo-servlet.xml'
+1732351463663	Copy file
+1732356179363	Delete element

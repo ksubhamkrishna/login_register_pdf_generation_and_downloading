@@ -1,0 +1,4 @@
+1732623024737	Delete element
+1732624106563	Rename resource 'dao'
+1732624114052	Move 'controller' to 'data_access'
+1732624119135	Move 'dao' to 'data_access'

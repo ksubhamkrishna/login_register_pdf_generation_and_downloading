@@ -1,0 +1,93 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import com.example.demo.bean.BeanDefinitions;
+import com.example.demo.dto.EmailPasswordDto;
+import com.example.demo.dto.UserDto;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	RestTemplate restTemplate = new RestTemplate();
+
+//    @Override
+//    public boolean validateUser(String username, String password) {
+//        User user = customerDAO.findByUsername(username);
+//        return user != null && user.getPassword().equals(password);
+//    }
+
+	@Override
+	public String register(UserDto user) {
+		String url = "http://localhost:9021/POC/login/register";
+		System.out.println("POST url is: " + url);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<UserDto> postData = new HttpEntity<>(user, headers);
+
+		try {
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, postData, String.class);
+			HttpStatus statusCode = responseEntity.getStatusCode();
+			String responseBody = responseEntity.getBody();
+			System.out.println("Response Status Code: " + statusCode);
+			System.out.println("Response Body: " + responseBody);
+			if (statusCode.is2xxSuccessful()) {
+				return "Registration successful!";
+			} else {
+				return "Registration failed: " + responseBody;
+			}
+		} catch (HttpClientErrorException | HttpServerErrorException ex) {
+			System.out.println("Error during registration: " + ex.getMessage());
+			return "Error during registration: " + ex.getStatusCode();
+		} catch (Exception ex) {
+			System.out.println("Unexpected error: " + ex.getMessage());
+			return "Unexpected error: " + ex.getMessage();
+		}
+	}
+	
+	public String validateUser(String username, String password) {
+	    String url = "http://localhost:9021/POC/login/process";
+	    System.out.println("POST url is: " + url);
+
+	    // Prepare the headers and the request body (DTO or map)
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    // Assuming you have a simple LoginDto (username, password) class
+	    EmailPasswordDto userDto = new EmailPasswordDto(username, password);
+	    HttpEntity<UserDto> postData = new HttpEntity<>(userDto, headers);
+
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, postData, String.class);
+	        String responseBody = response.getBody();
+	        Boolean responseBodyBoolean = Boolean.parseBoolean(responseBody);
+
+	        if (responseBodyBoolean) {
+	            return "User validation successful!";
+	        } else {
+	            return "Invalid credentials.";
+	        }
+
+	    } catch (HttpClientErrorException | HttpServerErrorException ex) {
+	        System.out.println("Error during validation: " + ex.getMessage());
+	        return "Error during validation: " + ex.getStatusCode();
+	    } catch (Exception ex) {
+	        System.out.println("Unexpected error: " + ex.getMessage());
+	        return "Unexpected error: " + ex.getMessage();
+	    }
+	}
+
+}
